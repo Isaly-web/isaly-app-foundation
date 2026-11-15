@@ -14,7 +14,7 @@ it and how a release is made.
 bun install        # bun.lock is the only lockfile; bunfig.toml has a 24h supply-chain guard
 bun run test       # vitest run
 bun run typecheck  # tsc --noEmit
-bun run build      # rewrites dist/ (committed)
+bun run build:dist # rewrites dist/ (committed)
 bun run format     # prettier --write .
 ```
 
@@ -35,5 +35,9 @@ that the committed `dist/` equals the build output. All blocking.
 - User-facing texts exist in Swedish and English and never contain a raw provider message.
 - `PASSWORD_MIN_LENGTH` mirrors a setting in Supabase Auth for the shared project. Do not change it
   unless the project owner has changed that setting.
+- Apps install this package from git, and npm then runs `npm install` inside it before use when
+  `package.json` has a script named `build`, `prepare`, `prepack`, `preinstall`, `install` or
+  `postinstall`. That fails, so none of those script names may exist (`package.test.ts` checks it);
+  the build script is `build:dist` and `dist/` is committed instead.
 - A change in behaviour needs a test, a rebuilt `dist/` and a new version; apps pick it up only
   when they move to the new tag.

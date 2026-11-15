@@ -63,10 +63,10 @@ bun run typecheck
 ```
 
 ```bash
-bun run build
+bun run build:dist
 ```
 
-`bun run build` rewrites `dist/`. Commit `dist/` together with the source change; CI fails when
+`bun run build:dist` rewrites `dist/`. Commit `dist/` together with the source change; CI fails when
 they differ.
 
 ## Releasing

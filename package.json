@@ -19,13 +19,14 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build:dist": "rm -rf dist && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "@types/node": "22",
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
     "vitest": "^4.1.10"

@@ -1,8 +1,15 @@
 {
-  "name": "@isaly/app-foundation",
+  "name": "@isaly-web/app-foundation",
   "version": "0.1.0",
-  "private": true,
   "description": "Code shared by every Isaly app (Isaly App Foundation).",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isaly-web/isaly-app-foundation.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "type": "module",
   "sideEffects": false,
   "files": [

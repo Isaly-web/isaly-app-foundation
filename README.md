@@ -26,10 +26,17 @@ only lets forms say so before the request is sent. Change both together, never o
 Apply the rule where a password is **chosen** (sign-up, reset, change). Do not put it on a sign-in
 field: older accounts may have a shorter password and must still be able to sign in.
 
+## This repository is public
+
+Anyone can read this repository and its whole history. Never commit a secret, key, token, password,
+internal hostname or personal data here, not even briefly: a secret that has been pushed is public
+from that moment and must be replaced, because deleting the file does not remove it from the
+history. Code that needs a secret reads it from an environment variable in the app.
+
 ## Using it in an app
 
-The repository is private and the package is not published to a registry. An app installs it from
-git, pinned to a release tag:
+An app installs the package straight from this repository, pinned to a release tag. No token and no
+registry are needed, because the repository is public:
 
 ```json
 "dependencies": {
@@ -37,12 +44,9 @@ git, pinned to a release tag:
 }
 ```
 
-The built files in `dist/` are committed, so the app needs no build step for the package.
-
-Because the repository is private, every place that installs the app's dependencies needs read
-access to it: the developer's machine, the app's GitHub Actions workflow and the app's Vercel
-project. This is not set up yet for any app; decide on the mechanism (for example a fine-grained
-token with read-only access to this repository only) before the first app depends on the package.
+Update every lockfile the app has (`bun install`, and `npm install` too if the app keeps a
+`package-lock.json`). The built files in `dist/` are committed, so the app needs no build step for
+the package.
 
 ```ts
 import { authErrorMessage, isNewPasswordLongEnough } from "@isaly/app-foundation/auth";
@@ -71,7 +75,8 @@ they differ.
 
 ## Releasing
 
-1. Raise `version` in `package.json` (a breaking change raises the first number).
-2. Merge to `main`.
-3. Tag the merge commit `v<version>` and push the tag.
-4. In each app, change the tag in `package.json` and update its lockfile(s).
+1. Raise `version` in `package.json` (a breaking change raises the first number) and merge to
+   `main`.
+2. On GitHub: Releases → Draft a new release → new tag `v<version>` with target `main` → Publish.
+   Never move or delete a tag that apps use; to fix a release, make a new version.
+3. In each app, change the tag in `package.json` and update its lockfile(s).

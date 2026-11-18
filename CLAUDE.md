@@ -25,9 +25,10 @@ that the committed `dist/` equals the build output. All blocking.
 
 - Only code that at least two apps use in the same way belongs here. App-specific product logic
   stays in the app.
-- Keep modules pure and isomorphic unless the file name ends in `.server.ts`. No secrets, internal
-  hostnames, keys or environment-specific values: every app, and everyone with access to any app's
-  `node_modules`, can read this package.
+- **This repository is public.** Never commit secrets, keys, tokens, passwords, internal
+  hostnames, personal data or environment-specific values, not even in a commit that a later one
+  removes: the history is public too. Code that needs a secret reads it from the app's environment.
+- Keep modules pure and isomorphic unless the file name ends in `.server.ts`.
 - No runtime dependencies without the project owner's approval; the package must stay cheap to
   install in every app.
 - Relative imports end in `.js` (NodeNext). Every public symbol is exported from an entry file
@@ -35,9 +36,10 @@ that the committed `dist/` equals the build output. All blocking.
 - User-facing texts exist in Swedish and English and never contain a raw provider message.
 - `PASSWORD_MIN_LENGTH` mirrors a setting in Supabase Auth for the shared project. Do not change it
   unless the project owner has changed that setting.
-- Apps install this package from git, and npm then runs `npm install` inside it before use when
-  `package.json` has a script named `build`, `prepare`, `prepack`, `preinstall`, `install` or
-  `postinstall`. That fails, so none of those script names may exist (`package.test.ts` checks it);
-  the build script is `build:dist` and `dist/` is committed instead.
+- Apps install this package from git (`github:Isaly-web/isaly-app-foundation#v<version>`), and
+  npm then runs `npm install` inside it before use when `package.json` has a script named `build`,
+  `prepare`, `prepack`, `preinstall`, `install` or `postinstall`. That fails, so none of those
+  script names may exist (`package.test.ts` checks it); the build script is `build:dist` and `dist/`
+  is committed instead.
 - A change in behaviour needs a test, a rebuilt `dist/` and a new version; apps pick it up only
   when they move to the new tag.
